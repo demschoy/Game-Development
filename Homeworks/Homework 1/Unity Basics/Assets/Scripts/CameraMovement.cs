@@ -9,7 +9,8 @@ public class CameraMovement : MonoBehaviour
     [SerializeField]
     private Vector3 offset = new Vector3(0, 0, 0);
     [SerializeField]
-    private float smoothedSpeed = 8;
+    [Range(0.1f, 0.5f)]
+    private float smoothedSpeed = 0.3f;
 
     // Start is called before the first frame update
     void Start()
@@ -21,7 +22,7 @@ public class CameraMovement : MonoBehaviour
     {
         Vector3 velocity = Vector3.zero;
         Vector3 position = target.position + offset;
-        transform.position = Vector3.SmoothDamp(transform.position, position, ref velocity, smoothedSpeed * Time.deltaTime);
+        transform.position = Vector3.SmoothDamp(transform.position, position, ref velocity, smoothedSpeed);
         transform.LookAt(target);
     }
 }
