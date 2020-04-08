@@ -10,6 +10,11 @@ public class MushroomMovement : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
+     
+        if(gameObject.activeSelf)
+        {
+            animator.SetBool("IsVisible", true);
+        }
     }
 
     // Update is called once per frame

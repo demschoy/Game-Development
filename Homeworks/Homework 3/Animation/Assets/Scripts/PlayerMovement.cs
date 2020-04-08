@@ -75,9 +75,9 @@ public class PlayerMovement : MonoBehaviour
 			velocity.y = 0;
 		}
 
-		if(collision.gameObject.CompareTag("QuestionBlock"))
+		if(collision.gameObject.CompareTag("Block"))
 		{
-			
+			velocity.y = 0;
 		}
 
 		if(collision.gameObject.CompareTag("Mushroom"))

@@ -30,9 +30,9 @@ public class QuestionBlockHit : MonoBehaviour
             if(!isHit)
             {
                 isHit = true;
+                gameObject.tag = "Block";
                 animator.SetBool("IsHit", isHit);
                 mushroom.SetActive(true);
-                mushroomAnimator.SetBool("IsVisible", true);
             }
         }
     }
