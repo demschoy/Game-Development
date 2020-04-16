@@ -11,6 +11,7 @@ public class AICrouchState : StateMachineBehaviour
     {
         movementController = animator.GetComponent<MovementController>();
         movementController.SetHorizontalMoveDirection(0);
+        movementController.Crouch();
 
         Transform player = GameObject.FindWithTag("Player").transform;
         float distanceDirectionToPlayer = player.position.x - animator.transform.position.x;
@@ -20,7 +21,7 @@ public class AICrouchState : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateinfo, int layerindex)
     {
-        if (movementController.Velocity.y == 0)
+        if (movementController.Velocity.y <= 0)
         {
             animator.SetTrigger("ShouldCrouchKick");
         }

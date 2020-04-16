@@ -37,12 +37,9 @@ public class MovementController : MonoBehaviour {
 	void Update() {
 		ResolveLookDirection();
 		Move();
-		if (IsAirborne) {
-			Fall();
-		}
-		if(IsCrouching)
+		if (IsAirborne)
 		{
-			StandUp();
+			Fall();
 		}
 	}
 
@@ -58,14 +55,6 @@ public class MovementController : MonoBehaviour {
 		velocity.y -= gravity * Time.deltaTime;
 	}
 
-	private void StandUp()
-	{
-		Debug.Log("standup");
-		OnCrouchEnded?.Invoke();
-		IsCrouching = false;
-		velocity.y = 0;
-	}
-
 	public void SetHorizontalMoveDirection(float amount) {
 		velocity.x = amount;
 	}
@@ -77,7 +66,6 @@ public class MovementController : MonoBehaviour {
 
 	public void Crouch()
 	{
-		velocity.y = rigidbody.velocity.y;
 		IsCrouching = true;
 	}
 
@@ -97,12 +85,15 @@ public class MovementController : MonoBehaviour {
 			OnJumpEnded?.Invoke();
 			velocity.y = 0;
 		}
-		if(collision.gameObject.CompareTag("Environment") && IsCrouching)
+		if(collision.gameObject.CompareTag("Player"))
 		{
-			Debug.Log("invoke");
+			OnCrouchEnded?.Invoke();
+		}
+		if(IsCrouching)
+		{
 			IsCrouching = false;
 			OnCrouchEnded?.Invoke();
 		}
-		
+
 	}
 }
