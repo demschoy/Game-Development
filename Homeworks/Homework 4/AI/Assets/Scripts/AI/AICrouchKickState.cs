@@ -14,9 +14,8 @@ public class AICrouchKickState : StateMachineBehaviour
         hitBox = animator.transform.GetChild(2).gameObject;
         hitBox.SetActive(true);
 
-        float crouchKickDirectionToPlayer = Sign(animator.transform.localScale.x);
         movementController = animator.GetComponent<MovementController>();
-        movementController.SetHorizontalMoveDirection(crouchKickDirectionToPlayer);
+        movementController.SetHorizontalMoveDirection(0);
         movementController.OnCrouchEnded += ResetAnimationState;
     }
 

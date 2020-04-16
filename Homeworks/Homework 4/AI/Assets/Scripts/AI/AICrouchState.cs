@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+﻿using UnityEngine;
+using static StateMachineUtil;
 public class AICrouchState : StateMachineBehaviour
 {
     private MovementController movementController;
@@ -21,9 +19,12 @@ public class AICrouchState : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateinfo, int layerindex)
     {
-        if (movementController.Velocity.y <= 0)
-        {
-            animator.SetTrigger("ShouldCrouchKick");
-        }
+        float delay = 0.5f;
+        DoWithDelay(delay, () => animator.SetTrigger("ShouldCrouchKick"));
+    }
+
+    public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        animator.ResetTrigger("ShouldCrouchKick");
     }
 }
