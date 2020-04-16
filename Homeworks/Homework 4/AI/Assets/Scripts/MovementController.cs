@@ -13,6 +13,8 @@ public class MovementController : MonoBehaviour {
 	public float gravity = 5f;
 
 	public bool IsAirborne { get; set; } = false;
+	public bool IsCrouching { get; set; } = false;
+
 	private readonly float movementThreshold = 0.01f;
 
 	[SerializeField]
@@ -26,6 +28,8 @@ public class MovementController : MonoBehaviour {
 
 	public event Action OnJumpEnded;
 
+	public event Action OnCrouchEnded;
+
 	void Start() {
 		rigidbody = GetComponent<Rigidbody2D>();
 	}
@@ -35,6 +39,10 @@ public class MovementController : MonoBehaviour {
 		Move();
 		if (IsAirborne) {
 			Fall();
+		}
+		if(IsCrouching)
+		{
+			StandUp();
 		}
 	}
 
@@ -50,6 +58,14 @@ public class MovementController : MonoBehaviour {
 		velocity.y -= gravity * Time.deltaTime;
 	}
 
+	private void StandUp()
+	{
+		Debug.Log("standup");
+		OnCrouchEnded?.Invoke();
+		IsCrouching = false;
+		velocity.y = 0;
+	}
+
 	public void SetHorizontalMoveDirection(float amount) {
 		velocity.x = amount;
 	}
@@ -57,6 +73,12 @@ public class MovementController : MonoBehaviour {
 	public void Jump() {
 		velocity.y = jumpVelocity;
 		IsAirborne = true;
+	}
+
+	public void Crouch()
+	{
+		velocity.y = rigidbody.velocity.y;
+		IsCrouching = true;
 	}
 
 	private void ResolveLookDirection() {
@@ -75,5 +97,12 @@ public class MovementController : MonoBehaviour {
 			OnJumpEnded?.Invoke();
 			velocity.y = 0;
 		}
+		if(collision.gameObject.CompareTag("Environment") && IsCrouching)
+		{
+			Debug.Log("invoke");
+			IsCrouching = false;
+			OnCrouchEnded?.Invoke();
+		}
+		
 	}
 }
