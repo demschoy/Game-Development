@@ -24,6 +24,7 @@ public class AICrouchKickState : StateMachineBehaviour
     {
         movementController.OnCrouchEnded -= ResetAnimationState;
         hitBox.SetActive(false);
+        movementController.dodgeAfterPunch = false;
     }
 
     private void ResetAnimationState()

@@ -14,6 +14,7 @@ public class MovementController : MonoBehaviour {
 
 	public bool IsAirborne { get; set; } = false;
 	public bool IsCrouching { get; set; } = false;
+	public bool dodgeAfterPunch { set; get; } = false;
 
 	private readonly float movementThreshold = 0.01f;
 

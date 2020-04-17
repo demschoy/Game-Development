@@ -33,8 +33,9 @@ public class Health : MonoBehaviour {
 	}
 
 	private void OnTriggerEnter2D(Collider2D collision) {
+		MovementController movementController = gameObject.GetComponent<MovementController>();
 		if (collision.transform.parent != transform
-			&& (collision.gameObject.CompareTag("Hitbox") || collision.gameObject.CompareTag("PunchHitbox"))) {
+			&& (collision.gameObject.CompareTag("Hitbox") || collision.gameObject.CompareTag("PunchHitbox")) && !movementController.dodgeAfterPunch)  {
 
 			TakeDamage();
 		}

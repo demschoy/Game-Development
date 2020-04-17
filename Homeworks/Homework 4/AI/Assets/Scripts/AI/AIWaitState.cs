@@ -27,5 +27,6 @@ public class AIWaitState : StateMachineBehaviour {
 	private void SetCrouchState()
 	{
 		animator.SetTrigger("ShouldCrouch");
+		movementController.dodgeAfterPunch = true;
 	}
 }
