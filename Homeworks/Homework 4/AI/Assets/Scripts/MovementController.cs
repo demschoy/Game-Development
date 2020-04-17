@@ -96,9 +96,5 @@ public class MovementController : MonoBehaviour {
 			OnJumpEnded?.Invoke();
 			velocity.y = 0;
 		}
-		if(collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Environment") || IsCrouching)
-		{
-			StandUp();
-		}
 	}
 }

@@ -22,9 +22,4 @@ public class AICrouchState : StateMachineBehaviour
         float delay = 0.5f;
         DoWithDelay(delay, () => animator.SetTrigger("ShouldCrouchKick"));
     }
-
-    public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-        animator.ResetTrigger("ShouldCrouchKick");
-    }
 }
