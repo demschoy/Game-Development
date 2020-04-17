@@ -34,7 +34,7 @@ public class Health : MonoBehaviour {
 
 	private void OnTriggerEnter2D(Collider2D collision) {
 		if (collision.transform.parent != transform
-			&& collision.gameObject.CompareTag("Hitbox")) {
+			&& (collision.gameObject.CompareTag("Hitbox") || collision.gameObject.CompareTag("PunchHitbox"))) {
 
 			TakeDamage();
 		}

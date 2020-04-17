@@ -30,6 +30,8 @@ public class MovementController : MonoBehaviour {
 
 	public event Action OnCrouchEnded;
 
+	public event Action OnCrouch;
+
 	void Start() {
 		rigidbody = GetComponent<Rigidbody2D>();
 	}
@@ -95,6 +97,14 @@ public class MovementController : MonoBehaviour {
 			IsAirborne = false;
 			OnJumpEnded?.Invoke();
 			velocity.y = 0;
+		}
+	}
+
+	private void OnTriggerEnter2D(Collider2D collision)
+	{
+		if(collision.transform.parent != transform && collision.gameObject.CompareTag("PunchHitbox"))
+		{
+			OnCrouch?.Invoke();
 		}
 	}
 }

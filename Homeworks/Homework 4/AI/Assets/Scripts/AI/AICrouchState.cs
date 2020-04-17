@@ -19,7 +19,7 @@ public class AICrouchState : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateinfo, int layerindex)
     {
-        float delay = 0.5f;
+        float delay = 0.1f;
         DoWithDelay(delay, () => animator.SetTrigger("ShouldCrouchKick"));
     }
 }
