@@ -1,20 +1,19 @@
 ﻿using UnityEngine;
+using System;
 using static UnityEngine.Mathf;
 
 public class Health : MonoBehaviour {
 
 	[SerializeField]
 	private int health = 100;
-
-	[SerializeField]
-	private HealthBar healthBar;
+	
+	public event Action OnTakeDamage;
 
 	private Animator animator;
 	public GameObject cross;
 
 	void Start() {
 		animator = GetComponent<Animator>();
-		healthBar.SetMaximumHealthValue(health);
 	}
 
 	public void SpawnCross() {
@@ -23,6 +22,11 @@ public class Health : MonoBehaviour {
 			y = -0.1f
 		};
 		Instantiate(cross, spawnPosition, Quaternion.identity);
+	}
+
+	public int GetHealth()
+	{
+		return health;
 	}
 
 	public void Die() {
@@ -34,8 +38,6 @@ public class Health : MonoBehaviour {
 		health = Max(health - damage, 0);
 		animator.SetInteger("Health", health);
 		animator.SetTrigger("TookDamage");
-
-		healthBar.SetHealth(health);
 	}
 
 	private void OnTriggerEnter2D(Collider2D collision) {
@@ -44,6 +46,7 @@ public class Health : MonoBehaviour {
 			&& (collision.gameObject.CompareTag("Hitbox") || collision.gameObject.CompareTag("PunchHitbox")))  {
 
 			TakeDamage();
+			OnTakeDamage?.Invoke();
 		}
 	}
 }
