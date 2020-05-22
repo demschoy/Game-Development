@@ -26,6 +26,9 @@ public class ScreenShaker : MonoBehaviour
     [Range(0, 1)]
     private float shakeDuration = 0.05f;
 
+    [SerializeField]
+    private int cameraNoise = 10;
+
     private UnityEngine.Vector3 cameraPosition; 
 
     private static ScreenShaker instance;
@@ -49,13 +52,13 @@ public class ScreenShaker : MonoBehaviour
         float endTime = startTime + shakeDuration;
 
         float noiseSeed = Random.value * 100;
-        float cameraNoise = intensity * 10;
-
+        float noise = intensity * cameraNoise;
+            
         while(Time.time < endTime)
         {
             float normalizedTime = (Time.time - startTime) / shakeDuration;
-            float offsetX = PerlinNoise(noiseSeed + cameraNoise * Time.time, 0);
-            float offsetY = PerlinNoise(0, noiseSeed + cameraNoise * Time.time);
+            float offsetX = PerlinNoise(noiseSeed + noise * Time.time, 0) * 2 - 1;
+            float offsetY = PerlinNoise(0, noiseSeed + noise * Time.time) * 2 - 1;
 
             UnityEngine.Vector3 offset = new UnityEngine.Vector2(offsetX, offsetY) * shakeCurve.Evaluate(normalizedTime) * intensity;
             transform.position = cameraPosition + offset;
