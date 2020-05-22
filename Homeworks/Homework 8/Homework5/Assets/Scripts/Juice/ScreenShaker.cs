@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using System.ComponentModel;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using TreeEditor;
 using UnityEngine;
+using UnityEngine.UIElements;
 using static UnityEngine.Mathf;
 
 [RequireComponent(typeof(Camera))]
@@ -24,11 +26,14 @@ public class ScreenShaker : MonoBehaviour
     [Range(0, 1)]
     private float shakeDuration = 0.05f;
 
+    private UnityEngine.Vector3 cameraPosition; 
+
     private static ScreenShaker instance;
 
     // Start is called before the first frame update
     void Start()
     {
+        cameraPosition = transform.position;
         instance = this;
     }
 
@@ -52,19 +57,30 @@ public class ScreenShaker : MonoBehaviour
             float offsetX = PerlinNoise(noiseSeed + cameraNoise * Time.time, 0);
             float offsetY = PerlinNoise(0, noiseSeed + cameraNoise * Time.time);
 
-            Vector3 offset = new Vector2(offsetX, offsetY) * shakeCurve.Evaluate(normalizedTime) * intensity;
-            transform.position += offset;
+            UnityEngine.Vector3 offset = new UnityEngine.Vector2(offsetX, offsetY) * shakeCurve.Evaluate(normalizedTime) * intensity;
+            transform.position = cameraPosition + offset;
             yield return null;
         }
     }
 
-    public static void LightShakeScreen()
+    private void OnEnable()
     {
-        ShakeScreen(instance.lightIntensity);
+        Health.OnTakeDamage += ShakeScreen;
     }
 
-    public static void HeavyShakeScreen()
+    private void OnDisable()
     {
-        ShakeScreen(instance.heavyIntensity);
+        Health.OnTakeDamage -= ShakeScreen;
+    }
+    public void ShakeScreen(UnityEngine.Vector3 transform, UnityEngine.Vector3 intensity)
+    {
+        if (intensity == UnityEngine.Vector3.zero)
+        {
+            ShakeScreen(instance.lightIntensity);
+        }
+        else if (intensity == UnityEngine.Vector3.one)
+        {
+            ShakeScreen(instance.heavyIntensity);
+        }
     }
 }

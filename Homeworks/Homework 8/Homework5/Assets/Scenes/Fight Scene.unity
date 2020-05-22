@@ -673,8 +673,8 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 8ba9ec1433b861d4cbac25db2975b38a, type: 3}
-  m_PlayOnAwake: 1
-  m_Volume: 1
+  m_PlayOnAwake: 0
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -769,8 +769,8 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: b881f330efcd85a419c41ed77fac0786, type: 3}
-  m_PlayOnAwake: 1
-  m_Volume: 1
+  m_PlayOnAwake: 0
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -865,8 +865,8 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: e79c4dbd312763c4a9b91e2b0d81d8bf, type: 3}
-  m_PlayOnAwake: 1
-  m_Volume: 1
+  m_PlayOnAwake: 0
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1108,7 +1108,6 @@ GameObject:
   - component: {fileID: 963194228}
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
-  - component: {fileID: 963194230}
   - component: {fileID: 963194229}
   m_Layer: 0
   m_Name: Main Camera
@@ -1133,22 +1132,22 @@ MonoBehaviour:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: -0.025539398
-      value: 0.5411682
-      inSlope: 2
-      outSlope: 2
+      time: 0
+      value: 0.5011749
+      inSlope: -0.18999507
+      outSlope: -0.18999507
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0
+      outWeight: 0.41060904
     - serializedVersion: 3
-      time: 1.0432129
-      value: 0.37176514
-      inSlope: 0
-      outSlope: 0
+      time: 1
+      value: 1
+      inSlope: -0.1439271
+      outSlope: -0.1439271
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0
+      inWeight: 0.13359529
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -1221,19 +1220,6 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_Enabled: 1
---- !u!114 &963194230
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 963194225}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc3b92abd41bc584e90c2c24acd6c7db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  smoothSpeed: 0.3
 --- !u!4 &1054232775 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5065455668169363, guid: 65ba2f24eefa49d45afe75b367f59c72,

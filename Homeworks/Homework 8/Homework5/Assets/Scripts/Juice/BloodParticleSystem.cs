@@ -18,7 +18,7 @@ public class BloodParticleSystem : MonoBehaviour
         Health.OnTakeDamage -= BloodSplash;
     }
 
-    public void BloodSplash(Vector3 position)
+    public void BloodSplash(Vector3 position, Vector3 intensity)
     {
         bloodParticles.gameObject.SetActive(true);
         bloodParticles.Play();

@@ -22,13 +22,13 @@ public class Health : MonoBehaviour {
     public GameObject cross;
 
     public event Action<int> OnDamageTaken;
-    public static event Action<Vector3> OnTakeDamage;
+    public static event Action<Vector3, Vector3> OnTakeDamage;
 
     void Start() {
         animator = GetComponent<Animator>();
     }
 
-    public int getHealth() {
+    public int GetHealth() {
         return health;
     }
 
@@ -41,8 +41,8 @@ public class Health : MonoBehaviour {
     }
 
     public void Die() {
-        HeavyShakeScreen();
         PlayDieAudio();
+        OnTakeDamage.Invoke(transform.position, Vector3.one);
         Destroy(gameObject);
     }
 
@@ -59,9 +59,8 @@ public class Health : MonoBehaviour {
             && collision.gameObject.CompareTag("Hitbox")) {
 
             TakeDamage();
-            LightShakeScreen();
-            OnTakeDamage?.Invoke(transform.position);
             PlayHurtAudio();
+            OnTakeDamage?.Invoke(transform.position, Vector3.zero);
         }
     }
 }
