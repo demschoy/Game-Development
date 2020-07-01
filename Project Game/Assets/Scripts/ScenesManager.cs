@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class ScenesManager : MonoBehaviour
@@ -26,5 +27,23 @@ public class ScenesManager : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    public void GameOver()
+    {
+        GameObject panel = GameObject.FindGameObjectWithTag("GameOverPanel");
+        panel.SetActive(true);
+    }
+
+    private void OnEnable()
+    {
+        Health.OnPlayerDeath += StopGame;
+        EnemyHealth.OnHitGround += StopGame;
+    }
+
+    private void OnDisable()
+    {
+        Health.OnPlayerDeath -= StopGame;
+        EnemyHealth.OnHitGround -= StopGame;
     }
 }

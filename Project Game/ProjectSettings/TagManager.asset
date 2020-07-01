@@ -7,6 +7,9 @@ TagManager:
   - Ground
   - FirstPlayerName
   - SecondPlayerName
+  - Enemy
+  - Bullet
+  - GameOverPanel
   layers:
   - Default
   - TransparentFX

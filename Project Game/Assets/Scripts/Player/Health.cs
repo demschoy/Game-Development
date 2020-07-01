@@ -19,6 +19,7 @@ public class Health : MonoBehaviour
     private Animator livesAnimator;
 
     public event Action OnDamageTaken;
+    public static event Action OnPlayerDeath;
 
     public void Start()
     {
@@ -70,6 +71,7 @@ public class Health : MonoBehaviour
 
     public void Die()
     {
+        OnPlayerDeath?.Invoke();
         Destroy(gameObject);
     }
 

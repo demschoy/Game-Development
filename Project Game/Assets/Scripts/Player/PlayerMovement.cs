@@ -16,8 +16,10 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField]
     private float speed = 20;
-    
-    private Vector3 velocity = Vector3.zero;
+
+    private float movementThreshold = 0.01f;
+    private float smoothMovement = 0.15f;
+
     private Animator firstPlayerAnimator;
     private Animator secondPlayerAnimator;
 
@@ -39,25 +41,50 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKey(FirstPlayerLeft) || Input.GetKey(FirstPlayerRight))
+        if (!Input.GetKey(FirstPlayerRight) && Input.GetKey(FirstPlayerLeft) && firstPlayer.transform.position.x >= -11)
         {
-            Move(firstPlayer, firstPlayerAnimator);
+            Move(firstPlayer, firstPlayerAnimator, Vector3.left * smoothMovement); 
         }
-        if (Input.GetKey(SecondPlayerLeft) || Input.GetKey(SecondPlayerRight))
+        else if(!Input.GetKey(FirstPlayerLeft) && Input.GetKey(FirstPlayerRight) && firstPlayer.transform.position.x <= -2.5)
         {
+            Move(firstPlayer, firstPlayerAnimator, Vector3.right * smoothMovement);
+        }
+        else
+        {
+            NotMoving(firstPlayerAnimator);        
+        }
 
-            Move(secondPlayer, secondPlayerAnimator);
+        if (!Input.GetKey(SecondPlayerRight) && Input.GetKey(SecondPlayerLeft) && secondPlayer.transform.position.x >= -1.2)
+        {
+            Move(secondPlayer, secondPlayerAnimator, Vector3.left * smoothMovement);
+        }
+        else if (!Input.GetKey(SecondPlayerLeft) && Input.GetKey(SecondPlayerRight) && secondPlayer.transform.position.x <= 7.9)
+        {
+            Move(secondPlayer, secondPlayerAnimator, Vector3.right * smoothMovement);
+        }
+        else
+        {
+            NotMoving(secondPlayerAnimator);
         }
     }
 
-    private void Move(GameObject player, Animator animator)
+    private void Move(GameObject player, Animator animator, Vector3 direction)
     {
-            velocity.x = Input.GetAxis("Horizontal");
-            animator.SetFloat("HorizontalMovement", Abs(velocity.x));
+        animator.SetFloat("HorizontalMovement", Abs(direction.x));
 
-            player.transform.position += velocity * speed * Time.deltaTime;
+        if(Abs(direction.x) > movementThreshold)
+        {
+            player.transform.localScale = new Vector3(3 * Sign(direction.x), 3, 1);
+        }
 
-            OnPlayerMove?.Invoke();
+        player.transform.position += direction * speed * Time.deltaTime;
+
+        OnPlayerMove?.Invoke();
+    }
+
+    private void NotMoving(Animator animator)
+    {
+        animator.SetFloat("HorizontalMovement", Vector3.zero.x);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

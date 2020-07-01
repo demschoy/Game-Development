@@ -173,9 +173,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1838654956771510842}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f039740f206d5e149a5e4b7fdee27cf1, type: 3}
+  m_Script: {fileID: 11500000, guid: b30ce787b1df2204985f1945518df684, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitsLeftText: {fileID: 6483499877018467437}
+  health: {fileID: 0}
+  healthSlider: {fileID: 423205953469447241}
 --- !u!1 &3385662002168222052
 GameObject:
   m_ObjectHideFlags: 0
