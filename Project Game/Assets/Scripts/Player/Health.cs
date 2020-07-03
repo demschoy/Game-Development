@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using UnityEditor.UIElements;
 using UnityEngine;
 using static AudioManager;
@@ -8,6 +8,7 @@ public class Health : MonoBehaviour
     [SerializeField]
     [Range(1, 10)]
     private int maxHitsToTake = 5;
+    public int MaxHitsToTake { get => maxHitsToTake; }
 
     [SerializeField]
     private GameObject lives = null;
@@ -30,11 +31,6 @@ public class Health : MonoBehaviour
         livesAnimator = lives.GetComponent<Animator>();
 
         animator.SetInteger("Health", HitsLeft);
-    }
-
-    public int MaxHitsToTake()
-    {
-        return maxHitsToTake;
     }
 
     public void TakeDamage()
@@ -87,6 +83,11 @@ public class Health : MonoBehaviour
             PlayHurtSound();
             OnTakeDamage.Invoke(transform.position, Vector3.zero);
             TakeDamage();
+        }
+
+         if (collision.CompareTag("Enemy"))
+        {
+          LoseLife();
         }
     }
 

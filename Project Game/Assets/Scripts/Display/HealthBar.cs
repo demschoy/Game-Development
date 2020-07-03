@@ -15,10 +15,10 @@ public class HealthBar : MonoBehaviour
     
     void Start()
     {
-        healthSlider.maxValue = health.MaxHitsToTake();
-        healthSlider.value = health.MaxHitsToTake();
+        healthSlider.maxValue = health.MaxHitsToTake;
+        healthSlider.value = health.MaxHitsToTake;
 
-        hitsLeftText.text = health.HitsLeft.ToString() + "/" + health.MaxHitsToTake().ToString();
+        hitsLeftText.text = health.HitsLeft.ToString() + "/" + health.MaxHitsToTake.ToString();
     }
 
     private void OnEnable   ()
@@ -34,7 +34,7 @@ public class HealthBar : MonoBehaviour
     private void UpdateHealthSlider(int hitsLeft)
     {
         healthSlider.value = hitsLeft;
-        hitsLeftText.text = hitsLeft.ToString() + "/" + health.MaxHitsToTake().ToString();
+        hitsLeftText.text = hitsLeft.ToString() + "/" + health.MaxHitsToTake.ToString();
     }
 }
 

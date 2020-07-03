@@ -4,34 +4,38 @@ using static Controllers;
 
 public class PlayerShooting : MonoBehaviour
 {
+    public Camera fpsCam;
     [SerializeField]
     private float maxSpeed = 25f;
-    [SerializeField]
-    private Rigidbody2D firstBullet = null;
-    [SerializeField]
-    private Rigidbody2D secondBullet = null;
-    [SerializeField]
-    private GameObject player1 = null;
-    [SerializeField]
-    private GameObject player2 = null;
-
     void Update()
     {
         if (Input.GetKeyDown(FirstPlayerShootKey))
         {
-            Shoot(player1, firstBullet);
+            Shoot();
         }
 
         if (Input.GetKeyDown(SecondPlayerShootKey))
         {
-            Shoot(player2, secondBullet);
+            Shoot();
         }
     }
 
-    private void Shoot(GameObject player, Rigidbody2D bullet)
+    private void Shoot()
     {
-        Rigidbody2D bulletInstance = Instantiate(bullet, player.transform.position, player.transform.rotation) as Rigidbody2D;
-        bulletInstance.velocity = player.transform.forward * maxSpeed;
-        Physics2D.IgnoreCollision(bulletInstance.GetComponent<Collider2D>(), player.GetComponent<Collider2D>());
+        RaycastHit hitInfo;
+        if(Physics.Raycast(fpsCam.transform.position,fpsCam.transform.forward,out hitInfo))
+        {
+            EnemyHealth enemy = hitInfo.transform.GetComponent<EnemyHealth>();
+             
+             if(enemy != null)
+             {
+                  enemy.TakeDamage();
+             }
+        
+        
+        }
+
     }
+
+    
 }

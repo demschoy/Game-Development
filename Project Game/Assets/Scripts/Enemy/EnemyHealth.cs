@@ -41,7 +41,7 @@ public class EnemyHealth : MonoBehaviour
         Destroy(gameObject);
     }
        
-    private void TakeDamage()
+    public void TakeDamage()
     {
         hitTarget -= 1;
         animator.SetTrigger("TookDamage");
@@ -49,7 +49,7 @@ public class EnemyHealth : MonoBehaviour
         {
             PlayHitSound();
             OnEnemyDeath?.Invoke();
-            animator.SetTrigger("Die");
+            animator.SetBool("IsDying", true);
         }
     }
 }
