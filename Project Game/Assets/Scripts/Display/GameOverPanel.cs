@@ -21,11 +21,13 @@ public class GameOverPanel : MonoBehaviour
     private void OnEnable()
     {
         Health.OnPlayerDeath += GameOver;
+        EnemyHealth.OnHitGround += GameOver;
     }
 
     private void OnDisable()
     {
         Health.OnPlayerDeath -= GameOver;
+        EnemyHealth.OnHitGround -= GameOver;
     }
 
     private void Start()

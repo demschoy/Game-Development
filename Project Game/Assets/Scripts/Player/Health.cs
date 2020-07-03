@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+using UnityEditor.UIElements;
 using UnityEngine;
+using static AudioManager;
 
 public class Health : MonoBehaviour
 {
@@ -18,7 +18,8 @@ public class Health : MonoBehaviour
     private Animator animator;
     private Animator livesAnimator;
 
-    public event Action OnDamageTaken;
+    public event Action<int> OnDamageTaken;
+    public static event Action<Vector3, Vector3> OnTakeDamage;
     public static event Action OnPlayerDeath;
 
     public void Start()
@@ -39,17 +40,17 @@ public class Health : MonoBehaviour
     public void TakeDamage()
     {
         HitsLeft -= 1;
-        if(HitsLeft <= 0)
+        if(HitsLeft <= 0)       
         {
             LoseLife();
+            OnTakeDamage?.Invoke(transform.position, Vector3.one);
         }
         else
         {
             animator.SetInteger("Health", HitsLeft);
             animator.SetTrigger("TookDamage");
-            livesAnimator.SetTrigger("TookDamage");
+            OnDamageTaken?.Invoke(HitsLeft);
         }
-        OnDamageTaken?.Invoke();
     }
 
     public void LoseLife()
@@ -57,37 +58,45 @@ public class Health : MonoBehaviour
         LivesLeft -= 1;
         animator.SetTrigger("LostLife");
         livesAnimator.SetTrigger("LostLife");
-
+        
         if (LivesLeft <= 0)
         {
+            OnDamageTaken?.Invoke(HitsLeft);
             Die();
         }
         else
         {
             HitsLeft = maxHitsToTake;
             animator.SetInteger("Health", HitsLeft);
+            OnDamageTaken?.Invoke(HitsLeft);
         }
     }
 
     public void Die()
     {
+        PlayDeathSound();
+        OnTakeDamage?.Invoke(transform.position, Vector3.one);
         OnPlayerDeath?.Invoke();
-        Destroy(gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //TODO - add logic
-        if ("shooting" == "shoot")
+        //TODO - add further logic
+        if (collision.CompareTag("EnemyBullet"))
         {
+            PlayHurtSound();
+            OnTakeDamage.Invoke(transform.position, Vector3.zero);
             TakeDamage();
-            OnDamageTaken?.Invoke();
-        }
-        if("fallenToTheGround" == "fallen")
-        {
-            LoseLife();
-            OnDamageTaken?.Invoke();
         }
     }
 
+    private void OnEnable()
+    {
+        EnemyHealth.OnHitGround += LoseLife;
+    }
+
+    private void OnDisable()
+    {
+        EnemyHealth.OnHitGround -= LoseLife;
+    }
 }

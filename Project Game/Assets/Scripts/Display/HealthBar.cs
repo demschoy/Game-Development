@@ -21,7 +21,7 @@ public class HealthBar : MonoBehaviour
         hitsLeftText.text = health.HitsLeft.ToString() + "/" + health.MaxHitsToTake().ToString();
     }
 
-    private void OnEnable()
+    private void OnEnable   ()
     {
         health.OnDamageTaken += UpdateHealthSlider;
     }
@@ -31,10 +31,10 @@ public class HealthBar : MonoBehaviour
         health.OnDamageTaken -= UpdateHealthSlider;
     }
 
-    private void UpdateHealthSlider()
+    private void UpdateHealthSlider(int hitsLeft)
     {
-        healthSlider.value = health.HitsLeft;
-        hitsLeftText.text = health.HitsLeft.ToString() + "/" + health.MaxHitsToTake().ToString();
+        healthSlider.value = hitsLeft;
+        hitsLeftText.text = hitsLeft.ToString() + "/" + health.MaxHitsToTake().ToString();
     }
 }
 

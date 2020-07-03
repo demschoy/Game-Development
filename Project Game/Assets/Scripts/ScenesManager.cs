@@ -37,13 +37,11 @@ public class ScenesManager : MonoBehaviour
 
     private void OnEnable()
     {
-        Health.OnPlayerDeath += StopGame;
-        EnemyHealth.OnHitGround += StopGame;
+        Health.OnPlayerDeath += GameOver;
     }
 
     private void OnDisable()
     {
-        Health.OnPlayerDeath -= StopGame;
-        EnemyHealth.OnHitGround -= StopGame;
+        Health.OnPlayerDeath -= GameOver;
     }
 }

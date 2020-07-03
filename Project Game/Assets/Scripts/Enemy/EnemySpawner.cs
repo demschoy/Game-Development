@@ -8,7 +8,7 @@ public class EnemySpawner : MonoBehaviour
 
     private int playerID = 0;
 
-    private float spawnRate = 3.5f;
+    private float spawnRate = 0.05f;
 
     private void Start()
     {

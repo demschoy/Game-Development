@@ -1,6 +1,6 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using static AudioManager;
 
 public class EnemyHealth : MonoBehaviour
 {
@@ -27,15 +27,13 @@ public class EnemyHealth : MonoBehaviour
         }
         if(collision.CompareTag("Ground"))
         {
-            // OnHitGround?.Invoke();
- 
-        // lose life instead?
+           // OnHitGround?.Invoke();
         }
     }
 
     public void GoingToDie()
     {
-        //TODO - add more effects
+        PlayDeathSound();
     }
 
     public void Die()
@@ -49,9 +47,9 @@ public class EnemyHealth : MonoBehaviour
         animator.SetTrigger("TookDamage");
         if(hitTarget <= 0)
         {
-            //TODO - add more effects 
-            animator.SetTrigger("Die");
+            PlayHitSound();
             OnEnemyDeath?.Invoke();
+            animator.SetTrigger("Die");
         }
     }
 }
